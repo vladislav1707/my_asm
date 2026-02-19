@@ -273,12 +273,12 @@ int main(int argc, char **args)
         return 1;
     }
 
-    // TODO: сделать запись в файл в выбранном формате(bin, dec, hex) с заполнением пустого пространства NOP
+    // запись в файл в выбранном формате(bin, dec, hex) с заполнением пустого пространства NOP(холостым ходом)
 
     bool is_success = false;
     if (format == "bin") // если выбран двоичный код
     {
-        if (!out.is_open()) // если не открылось то создать файл с таким именем
+        if (!out.is_open()) // если не открылось то выдать ошибку
         {
             cerr << "ERROR: Unable to open or create output file";
             return 1;
@@ -291,6 +291,26 @@ int main(int argc, char **args)
         for (int i = binary_code.size() + 1; i < 256 - binary_code.size(); i++)
         {
             out << "11000111" << "\n";
+        }
+        is_success = true;
+    }
+    if (format == "dec") // если выбран десятичный код
+    {
+        if (!out.is_open()) // если не открылось то выдать ошибку
+        {
+            cerr << "ERROR: Unable to open or create output file";
+            return 1;
+        }
+        for (int i = 0; i < binary_code.size(); i++) // записать в файл десятичный код
+        {
+            // Преобразуем двоичную строку в десятичное число
+            std::bitset<8> byte(binary_code[i]); // преобразовать string с двоичным кодом в bitset из 1 байта(8 бит)
+            out << byte.to_ulong() << "\n";      // преобразовать байт в unsigned long(беззнаковый длинный) и писать в файл
+        }
+        // заполнить остальную память NOP(холостой ход)
+        for (int i = binary_code.size() + 1; i < 256 - binary_code.size(); i++)
+        {
+            out << "199" << "\n";
         }
         is_success = true;
     }
