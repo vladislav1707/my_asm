@@ -1,0 +1,15 @@
+# Минимальная версия CMake
+cmake_minimum_required(VERSION 3.10)
+
+# Название проекта
+project(my_asm)
+
+# Устанавливаем стандарт C++17
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Автоматически собираем все .cpp файлы в текущей директории
+file(GLOB SOURCES "*.cpp")
+
+# Создаём исполняемый файл
+add_executable(my_asm ${SOURCES})

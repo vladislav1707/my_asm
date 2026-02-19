@@ -1,0 +1,3 @@
+C:/code_save_folder/my_asm/build/CMakeFiles/my_asm.dir
+C:/code_save_folder/my_asm/build/CMakeFiles/edit_cache.dir
+C:/code_save_folder/my_asm/build/CMakeFiles/rebuild_cache.dir
