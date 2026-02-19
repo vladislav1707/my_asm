@@ -288,7 +288,7 @@ int main(int argc, char **args)
             out << binary_code[i] << "\n"; // писать каждую команду с новой строки
         }
         // заполнить остальную память NOP(холостой ход)
-        for (int i = binary_code.size() + 1; i < 256 - binary_code.size(); i++)
+        for (int i = binary_code.size(); i < 256 - binary_code.size(); i++)
         {
             out << "11000111" << "\n";
         }
@@ -308,7 +308,7 @@ int main(int argc, char **args)
             out << byte.to_ulong() << "\n";      // преобразовать байт в unsigned long(беззнаковый длинный) и писать в файл
         }
         // заполнить остальную память NOP(холостой ход)
-        for (int i = binary_code.size() + 1; i < 256 - binary_code.size(); i++)
+        for (int i = binary_code.size(); i < 256 - binary_code.size(); i++)
         {
             out << "199" << "\n";
         }
