@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <bitset>
+#include <iomanip>
 
 using namespace std;
 
@@ -288,7 +289,7 @@ int main(int argc, char **args)
             out << binary_code[i] << "\n"; // писать каждую команду с новой строки
         }
         // заполнить остальную память NOP(холостой ход)
-        for (int i = binary_code.size(); i < 256 - binary_code.size(); i++)
+        for (int i = binary_code.size(); i < 256; i++)
         {
             out << "11000111" << "\n";
         }
@@ -304,13 +305,41 @@ int main(int argc, char **args)
         for (int i = 0; i < binary_code.size(); i++) // записать в файл десятичный код
         {
             // Преобразуем двоичную строку в десятичное число
-            std::bitset<8> byte(binary_code[i]); // преобразовать string с двоичным кодом в bitset из 1 байта(8 бит)
-            out << byte.to_ulong() << "\n";      // преобразовать байт в unsigned long(беззнаковый длинный) и писать в файл
+            bitset<8> byte(binary_code[i]); // преобразовать string с двоичным кодом в bitset из 1 байта(8 бит)
+            out << byte.to_ulong() << "\n"; // преобразовать байт в unsigned long(беззнаковый длинный) и писать в файл
         }
         // заполнить остальную память NOP(холостой ход)
-        for (int i = binary_code.size(); i < 256 - binary_code.size(); i++)
+        for (int i = binary_code.size(); i < 256; i++)
         {
             out << "199" << "\n";
+        }
+        is_success = true;
+    }
+    if (format == "hex") // если выбран шестнадцетеричный код
+    {
+        if (!out.is_open()) // если не открылось то выдать ошибку
+        {
+            cerr << "ERROR: Unable to open or create output file";
+            return 1;
+        }
+        // устанавливаем шестнадцатеричный формат и uppercase для букв A-F
+        out << hex << uppercase;
+
+        for (size_t i = 0; i < binary_code.size(); i++) // для каждой двоичной строки
+        {
+            // Преобразуем двоичную строку в десятичное число
+            bitset<8> byte(binary_code[i]);
+            // превращаем в unsignen long
+            unsigned long val = byte.to_ulong();
+            // setw устанавливает минимальную ширину поля, setfill то что пустые места будут заполнены нулями(F превратится в 0F)
+            // потом выводится val(unsigned long полученное из байта)
+            out << setw(2) << setfill('0') << val << "\n";
+        }
+
+        // заполнить остальную память NOP(холостой ход)
+        for (int i = binary_code.size(); i < 256; i++)
+        {
+            out << "C7" << "\n";
         }
         is_success = true;
     }
@@ -320,7 +349,7 @@ int main(int argc, char **args)
     in.close();
     if (is_success)
     {
-        std::cout << "File has been written" << std::endl;
+        cout << "File has been written" << endl;
     }
     return 0;
 
