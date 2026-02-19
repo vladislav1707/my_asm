@@ -277,7 +277,7 @@ int main(int argc, char **args)
         }
         if (binary_code[i].length() != 8) // при неверной длине команды
         {
-            cerr << "ERROR: Invalid command length";
+            cerr << "ERROR: Invalid command length at line: " << i + 1 << endl;
             return 1;
         }
     }
@@ -300,6 +300,11 @@ int main(int argc, char **args)
         for (int i = 0; i < binary_code.size(); i++) // записать в файл двоичный код
         {
             out << binary_code[i] << "\n"; // писать каждую команду с новой строки
+        }
+        // заполнить остальную память NOP(холостой ход)
+        for (int i = binary_code.size() + 1; i < 256 - binary_code.size(); i++)
+        {
+            out << "11000111" << "\n";
         }
         is_success = true;
     }

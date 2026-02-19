@@ -1,0 +1,23 @@
+IMM 0
+MOV R0 R4
+label loop
+MOV R4 OUT1
+MOV R4 R1
+IMM 10
+MOV R0 R2
+SUB
+IMM inc
+JLE
+IMM end
+JMP
+label inc
+IMM 1
+MOV R0 R1
+MOV R4 R2
+ADD
+MOV R3 R4
+IMM loop
+JMP
+label end
+IMM end
+JMP
